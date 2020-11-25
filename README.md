@@ -1,7 +1,7 @@
 # ZhTTS
 A demo of zh/Chinese Text to Speech system run on CPU in real time.
 
-*RTF(real time factor): 0.2 with cpu: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz*
+> *RTF(real time factor): 0.2 with cpu: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz*  24khz audio
 
 
 This repo is mainly based on [TensorFlowTTS](https://github.com/TensorSpeech/TensorFlowTTS) with little improvement.
@@ -56,6 +56,6 @@ $ curl -G --output - \
 - [ ] more accurate g2p by using g2pM ？
 - [ ] support synthesis English alpha 
 - [ ] use tflite_runtime without full tensorflow
-- [ ] more nature
+- [ ] improve naturalness
 - [ ] stream tts
 
