@@ -4,9 +4,9 @@ A demo of zh/Chinese Text to Speech system run on CPU in real time. (fastspeech2
 > *RTF(real time factor): 0.2 with cpu: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz*  24khz audio
 
 
-This repo is mainly based on [TensorFlowTTS](https://github.com/TensorSpeech/TensorFlowTTS) with little improvement.
+This repo is **mainly based on** [TensorFlowTTS](https://github.com/TensorSpeech/TensorFlowTTS) with little improvement.
 
-* tflite model come from [colab](https://colab.research.google.com/drive/1Ma3MIcSdLsOxqOKcN1MlElncYMhrOg3J?usp=sharing)
+* tflite model come from [colab](https://colab.research.google.com/drive/1Ma3MIcSdLsOxqOKcN1MlElncYMhrOg3J?usp=sharing), thx to @azraelkuan
 * add pause at punctuation (use #3)
 * add TN (Text Normalization) from [chinese_text_normalization](https://github.com/speechio/chinese_text_normalization)
 
