@@ -3,12 +3,28 @@ import numpy as np
 from pathlib import Path
 import tensorflow as tf 
 from scipy.io import wavfile
+import re
 
 from .tensorflow_tts.processor import BakerProcessor
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 asset_dir = Path(__file__).parent / "asset"
 
+def split_sens(text):
+    """ split sentence and keep sperator to the left 
+
+    Args:
+        text (str): 
+        
+    Returns:
+        list[str]: splited sentence
+        
+    Examples:
+        >>> split_sens("中文：语音，合成！系统\n")
+        ['中文：', '语音，', '合成！', '系统']
+    """
+    texts = re.split(r";", re.sub(r"([、，。！？])", r"\1;", text.strip()))
+    return [x for x in texts if x]
 
 class TTS():
     def __init__(self, text2mel_name="FASTSPEECH2"):
@@ -17,7 +33,12 @@ class TTS():
         self.processor = BakerProcessor(
             data_dir=None, loaded_mapper_path=asset_dir / "baker_mapper.json")
         self.text2mel_name = text2mel_name
-        self.acoustic = tf.lite.Interpreter(model_path=str(asset_dir / 'fastspeech2_quan.tflite'))
+        if text2mel_name == "FASTSPEECH2":
+            self.acoustic = tf.lite.Interpreter(model_path=str(asset_dir / 'fastspeech2_quan.tflite'))
+        elif text2mel_name == "TACOTRON":
+            self.acoustic = tf.lite.Interpreter(model_path=str(asset_dir / 'tacotron2_quan.tflite'))
+        else:
+            raise ValueError(f"unsported text2mel_name: {text2mel_name}")
         self.vocoder = tf.lite.Interpreter(model_path=str(asset_dir / 'mb_melgan.tflite'))
 
     def prepare_input(self, input_ids):
@@ -59,17 +80,30 @@ class TTS():
 
         return self.vocoder.get_tensor(output_details[0]['index'])[0, :, 0]
 
-    def synthesis(self, text):
+    def synthesis(self, text, sil_time=0.2):
         """ synthesis text to audio
 
         Args:
             text (str)
+            sil_time (float): silence duration between two wav
         Returns:
             ndarray: audio
         """
-        mel = self.text2mel(text)
-        audio = self.mel2audio(mel)
-        return audio
+        audios = []
+        texts = split_sens(text)
+        silence = np.zeros(int(sil_time * self.sample_rate), dtype=np.float32) # 添加静音
+        for i, text in enumerate(texts):
+            print(f"index: {i}, text: {text}")
+            print(f"frontend info: {self.frontend(text)}")
+            # print(self.processor.text_to_sequence(text, inference=True))
+            mel = self.text2mel(text)
+            audio = self.mel2audio(mel)
+            if self.text2mel_name == "TACOTRON":
+                audio = audio[:-2048]  # tacotron will generate noise at the end
+            audios.append(audio)
+            if i < len(texts)-1:
+                audios.append(silence)
+        return np.concatenate(audios)
 
     def frontend(self, text):
         """ return normalize_text, phoneme_seq for debug

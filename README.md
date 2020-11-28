@@ -1,7 +1,7 @@
 # ZhTTS
 A demo of zh/Chinese Text to Speech system run on CPU in real time.
 
-*RTF(real time factor): 0.2 with cpu: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz*
+> RTF(real time factor): 0.2 with cpu: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz 24khz use fastspeech2, rtf 1.6 for tacotron2
 
 
 This repo is mainly based on [TensorFlowTTS](https://github.com/TensorSpeech/TensorFlowTTS) with little improvement.
@@ -13,7 +13,9 @@ This repo is mainly based on [TensorFlowTTS](https://github.com/TensorSpeech/Ten
 ## demo wav 
 text = "2020年，这是一个开源的端到端中文语音合成系统"
 
-[demo.wav click to play](https://gitee.com/jackiegeek/zhtts/raw/master/demo.wav)
+* [fastspeech2 - demo.wav](https://gitee.com/jackiegeek/zhtts/raw/master/demo.wav)
+* [fastspeech2 - news](https://gitee.com/jackiegeek/zhtts/raw/master/fastspeech2.wav)
+* [tacotron2 - news](https://gitee.com/jackiegeek/zhtts/raw/master/tacotron2.wav)
 
 ## Install 
 clone this repo
@@ -27,7 +29,7 @@ for window , `pip install "tensorflow>=2.4.0rc"` because [this](https://www.tens
 import zhtts
 
 text = "2020年，这是一个开源的端到端中文语音合成系统"
-tts = zhtts.TTS()
+tts = zhtts.TTS() # use fastspeech2 by default
 tts.text2wav(text, "demo.wav")
 ```
 ```python
@@ -52,10 +54,18 @@ $ curl -G --output - \
     aplay
 ```
 
+## Use tacotron2 instead of fastspeech2
+wav generate from tacotron model is better than fast speech, however tacotron is much slower due to some issue (rtf 1.63 with cpu: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz 24khz use fastspeech ), to use Tacotron
+```python
+import zhtts
+tts = zhtts.TTS(text2mel_name="TACOTRON")
+# tts = zhtts.TTS(text2mel_name="FASTSPEECH2")
+```
+
+
 ## TODO 
-- [ ] more accurate g2p by using g2pM ？
+- [ ] more accurate g2p by using g2pM?
 - [ ] support synthesis English alpha 
 - [ ] use tflite_runtime without full tensorflow
-- [ ] more nature
 - [ ] stream tts
 

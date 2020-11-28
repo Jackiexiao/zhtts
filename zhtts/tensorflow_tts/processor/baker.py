@@ -619,8 +619,10 @@ class BakerProcessor(BaseProcessor):
         while i < char_len:
             cur_char = chn_char[i]
             if is_zh(cur_char):
+                if pinyin[j][:-1] == 'n': # 处理特殊“嗯” 特殊拼音
+                    pinyin[j] = 'en' + pinyin[j][-1]
                 if pinyin[j][:-1] not in self.pinyin_dict: #处理儿化音
-                    assert chn_char[i + 1] == "儿", cur_char+chn_char[i+1]
+                    assert chn_char[i + 1] == "儿", f"current_char : {cur_char}, next_char: {chn_char[i+1]}, cur_pinyin: {pinyin[j]}"
                     assert pinyin[j][-2] == "r"
                     tone = pinyin[j][-1]
                     a = pinyin[j][:-2]
@@ -642,19 +644,20 @@ class BakerProcessor(BaseProcessor):
 
                     i += 1
                     j += 1
-            # TODO 等待支持英文字母 这里假设 pypinyin 返回原始的英文字母
+            # TODO support English alpha
             # elif is_alpha(cur_char):
             #     result += ALPHA_PHONE_DICT[cur_char.upper()]
             #     if i + 1 < char_len and chn_char[i + 1] not in "#、，。！？：" :  # 每个字后面接一个#0
             #         result.append("#0")
             #     i += 1
-            #     j += 1  # 标贝新增的英文字母数据对应的拼音也是 单个的英文字母
+            #     j += 1  # baker alpha dataset "ABC" in pinyin
             elif cur_char == "#":
                 result.append(chn_char[i : i + 2])
                 i += 2
-            elif cur_char in "、，。！？：": # 遇到标点符号，添加停顿 TODO:可能对训练有影响
-                result.append("#3")
-                i += 1
+            # elif cur_char in "、，。！？：": # 遇到标点符号，添加停顿
+            #     result.pop() # 去掉#0
+            #     result.append("#3")
+            #     i += 1
             else:
                 # ignore the unknown char 
                 # result.append(chn_char[i])
@@ -664,7 +667,6 @@ class BakerProcessor(BaseProcessor):
         if result[-1] != "sil":
             result.append("sil")
         assert j == len(pinyin)
-        # print(f"get_phoneme_from_char_and_pinyin: {result}")
         return result
 
     def get_one_sample(self, item):
@@ -704,10 +706,8 @@ class BakerProcessor(BaseProcessor):
 
     def text_to_phone(self, text):
         """ return string like 'sil c e4 #0 sh iii4 #0 ^ uen2 #0 b en3 sil' """
-        text = NSWNormalizer(text).normalize()
-        # print(f"text normalize seq: {text}")
+        text = NSWNormalizer(text.strip()).normalize()
         pinyin = self.pinyin_parser(text, style=Style.TONE3, errors="ignore")
-        # print(f"g2p seq: {pinyin}")
         new_pinyin = []
         for x in pinyin:
             x = "".join(x)
@@ -715,7 +715,6 @@ class BakerProcessor(BaseProcessor):
                 new_pinyin.append(x)
         phonemes = self.get_phoneme_from_char_and_pinyin(text, new_pinyin) # phoneme seq: [sil c e4 #0 sh iii4 #0 ^ uen2 #0 b en3 sil]  string 的list
         phones = " ".join(phonemes)
-        # print(f"phoneme seq: {phones}")
         return text, phones
 
     def text_to_sequence(self, text, inference=False):

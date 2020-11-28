@@ -2,6 +2,12 @@ data
 refe
 .vscode
 demo.py
+run_test.py
+test.txt
+eval.txt
+tts_one_sentence.py
+zhtts/asset/tacotron2.tflite
+notes.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
