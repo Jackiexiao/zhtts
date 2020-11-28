@@ -1,12 +1,12 @@
 # ZhTTS
 A demo of zh/Chinese Text to Speech system run on CPU in real time. (fastspeech2 + mbmelgan)
 
-> RTF(real time factor): 0.2 with cpu: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz 24khz audio use fastspeech2, rtf 1.6 for tacotron2
+> RTF(real time factor): 0.2 with cpu: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz 24khz audio use fastspeech2, RTF1.6 for tacotron2
 
 This repo is **mainly based on** [TensorFlowTTS](https://github.com/TensorSpeech/TensorFlowTTS) with little improvement.
 
 * tflite model come from [colab](https://colab.research.google.com/drive/1Ma3MIcSdLsOxqOKcN1MlElncYMhrOg3J?usp=sharing), thx to [@azraelkuan](https://github.com/azraelkuan)
-* add pause at punctuation (use #3)
+* add pause at punctuation
 * add TN (Text Normalization) from [chinese_text_normalization](https://github.com/speechio/chinese_text_normalization)
 
 ## demo wav 
@@ -54,7 +54,7 @@ $ curl -G --output - \
 ```
 
 ## Use tacotron2 instead of fastspeech2
-wav generate from tacotron model is better than fast speech, however tacotron is much slower due to some issue (rtf 1.63 with cpu: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz 24khz use fastspeech ), to use Tacotron
+wav generate from tacotron model is better than fast speech, however tacotron is much slower for some reason, to use Tacotron, change code
 ```python
 import zhtts
 tts = zhtts.TTS(text2mel_name="TACOTRON")
@@ -69,5 +69,4 @@ tts = zhtts.TTS(text2mel_name="TACOTRON")
 - [ ] stream tts
 
 ## known issue
-This is just a **demo**, Expect the experience to be rough because many TN/g2p/prosody error.
-* when synthesis long sentence, audio will become unnatural
+This is just a **demo**, Expect the experience to be rough because many TN/g2p/prosody error and wrong pronuncation.
