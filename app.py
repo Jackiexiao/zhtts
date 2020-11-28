@@ -12,7 +12,7 @@ from scipy.io import wavfile
 from flask import Flask, Response, render_template, request
 # from flask_cors import CORS
 
-app = Flask("mozillatts")
+app = Flask("zhtts")
 # CORS(app)
 
 @app.route("/api/tts")
