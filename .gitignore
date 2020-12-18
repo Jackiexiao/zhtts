@@ -2,6 +2,7 @@ data
 refe
 .vscode
 demo.py
+model
 run_test.py
 test.txt
 eval.txt

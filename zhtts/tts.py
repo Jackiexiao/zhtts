@@ -2,13 +2,14 @@ import os
 import numpy as np
 from pathlib import Path
 import tensorflow as tf 
+#import tflite_runtime.interpreter as tflite
 from scipy.io import wavfile
 import re
 
 from .tensorflow_tts.processor import BakerProcessor
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-asset_dir = Path(__file__).parent / "asset"
+ASSET_DIR = Path(__file__).parent / "asset"
 
 def split_sens(text):
     """ split sentence and keep sperator to the left 
@@ -31,15 +32,15 @@ class TTS():
         """text2mel_name: ["FASTSPEECH2", "TACOTRON"] """
         self.sample_rate = 24000
         self.processor = BakerProcessor(
-            data_dir=None, loaded_mapper_path=asset_dir / "baker_mapper.json")
+            data_dir=None, loaded_mapper_path=ASSET_DIR / "baker_mapper.json")
         self.text2mel_name = text2mel_name
         if text2mel_name == "FASTSPEECH2":
-            self.acoustic = tf.lite.Interpreter(model_path=str(asset_dir / 'fastspeech2_quan.tflite'))
+            self.acoustic = tf.lite.Interpreter(model_path=str(ASSET_DIR / 'fastspeech2_quan.tflite'))
         elif text2mel_name == "TACOTRON":
-            self.acoustic = tf.lite.Interpreter(model_path=str(asset_dir / 'tacotron2_quan.tflite'))
+            self.acoustic = tf.lite.Interpreter(model_path=str(ASSET_DIR / 'tacotron2_quan.tflite'))
         else:
             raise ValueError(f"unsported text2mel_name: {text2mel_name}")
-        self.vocoder = tf.lite.Interpreter(model_path=str(asset_dir / 'mb_melgan.tflite'))
+        self.vocoder = tf.lite.Interpreter(model_path=str(ASSET_DIR / 'mb_melgan.tflite'))
 
     def prepare_input(self, input_ids):
         input_ids = np.expand_dims(np.array(input_ids, np.int32), 0)
@@ -123,4 +124,5 @@ class TTS():
         audio = self.synthesis(text)
         
         wavfile.write(wavpath, self.sample_rate, audio)
+        print(f"Save wav to {wavpath}")
         

@@ -12,13 +12,12 @@ setup(
     description="A demo of zh/Chinese Text to Speech system run on CPU",
     long_description=open("README.md", 'r', encoding='utf-8').read(),
     long_description_content_type="text/markdown",
+    include_package_data=True,
     install_requires=(
-        # "tf-nightly-cpu>=2.5.0.dev20201122",
-        # "tensorflow-cpu>=2.4.0rc", # for windows
-        "tensorflow-cpu>=2.3.0", # for linux
+        "tensorflow-cpu>=2.4.0",
         "numpy",
+        "scipy",
         "pypinyin",
-        # "g2pM",
         "dataclasses"
     ),
     classifiers=(

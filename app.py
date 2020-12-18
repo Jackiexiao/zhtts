@@ -1,7 +1,8 @@
-
+from pathlib import Path
 from zhtts import TTS
 
-tts = TTS()
+tts = TTS(text2mel_name="FASTSPEECH2")
+#tts = TTS(text2mel_name="TACOTRON")
 
 import io
 import time
@@ -12,7 +13,7 @@ from scipy.io import wavfile
 from flask import Flask, Response, render_template, request
 # from flask_cors import CORS
 
-app = Flask("zhtts")
+app = Flask("__name__")
 # CORS(app)
 
 @app.route("/api/tts")
