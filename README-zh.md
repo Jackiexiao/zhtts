@@ -15,8 +15,8 @@
 text = "2020年，这是一个开源的端到端中文语音合成系统"
 
 * [fastspeech2 - demo.wav](https://gitee.com/jackiegeek/zhtts/raw/master/demo.wav)
-* [fastspeech2 - 新闻](https://gitee.com/jackiegeek/zhtts/raw/master/fastspeech2.wav)
-* [tacotron2 - 新闻](https://gitee.com/jackiegeek/zhtts/raw/master/tacotron2.wav)
+* [fastspeech2 - 新闻](https://gitee.com/jackiegeek/zhtts/raw/master/fastspeech2.mp3)
+* [tacotron2 - 新闻](https://gitee.com/jackiegeek/zhtts/raw/master/tacotron2.mp3)
 
 ## 安装
 ```

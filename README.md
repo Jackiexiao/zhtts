@@ -15,8 +15,8 @@ This repo is **mainly based on** [TensorFlowTTS](https://github.com/TensorSpeech
 text = "2020年，这是一个开源的端到端中文语音合成系统"
 
 * [fastspeech2 - demo.wav](https://gitee.com/jackiegeek/zhtts/raw/master/demo.wav)
-* [fastspeech2 - news](https://gitee.com/jackiegeek/zhtts/raw/master/fastspeech2.wav)
-* [tacotron2 - news](https://gitee.com/jackiegeek/zhtts/raw/master/tacotron2.wav)
+* [fastspeech2 - news](https://gitee.com/jackiegeek/zhtts/raw/master/fastspeech2.mp3)
+* [tacotron2 - news](https://gitee.com/jackiegeek/zhtts/raw/master/tacotron2.mp3)
 
 ## Install 
 ```
