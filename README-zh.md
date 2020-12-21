@@ -1,7 +1,7 @@
 # ZhTTS
 [English](https://github.com/Jackiexiao/zhtts/blob/main/README.md)
 
-在CPU上实时运行的中文语音合成系统（一个简单的示例，使用 Fastspeech2 + MbMelGan）
+在CPU上实时运行的中文语音合成系统（一个简单的示例，使用 Fastspeech2 + MbMelGan），但总体效果离“能用”还有很大差距，供大家参考
 
 > 实时率RTF：0.2 Cpu: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz 采样率24khz  fastspeech2, RTF1.6 for tacotron2
 
@@ -14,9 +14,9 @@
 ## 合成效果
 text = "2020年，这是一个开源的端到端中文语音合成系统"
 
-* [fastspeech2 - demo.wav](https://uploader.shimo.im/f/ntu3b9McVNp7yQPb.wav)
-* [fastspeech2 - 新闻](https://uploader.shimo.im/f/78vEowrUp3nzVhLX.mp3)
-* [tacotron2 - 新闻](https://uploader.shimo.im/f/KTqcpOjna4bJ3Khn.mp3)
+* [fastspeech2 - demo.wav](http://uploader.shimo.im/f/ntu3b9McVNp7yQPb.wav)
+* [fastspeech2 - 新闻](http://uploader.shimo.im/f/78vEowrUp3nzVhLX.mp3)
+* [tacotron2 - 新闻](http://uploader.shimo.im/f/KTqcpOjna4bJ3Khn.mp3)
 
 ## 安装
 ```
