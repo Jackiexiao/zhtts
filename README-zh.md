@@ -14,9 +14,8 @@
 ## 合成效果
 text = "2020年，这是一个开源的端到端中文语音合成系统"
 
-* [fastspeech2 - demo.wav](http://uploader.shimo.im/f/ntu3b9McVNp7yQPb.wav)
-* [fastspeech2 - 新闻](http://uploader.shimo.im/f/78vEowrUp3nzVhLX.mp3)
-* [tacotron2 - 新闻](http://uploader.shimo.im/f/KTqcpOjna4bJ3Khn.mp3)
+* [zhtts synthesis mp3](https://shimo.im/docs/tcXPY9pdrdRdwqk6/ )
+
 
 ## 安装
 ```
