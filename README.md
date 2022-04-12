@@ -1,3 +1,5 @@
+建议使用 [paddlespeech来做中文语音合成](https://github.com/PaddlePaddle/PaddleSpeech/blob/develop/README_cn.md#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B)
+
 # ZhTTS
 [中文](https://github.com/Jackiexiao/zhtts/blob/main/README-zh.md)
 
